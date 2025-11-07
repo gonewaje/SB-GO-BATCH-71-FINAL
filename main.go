@@ -44,6 +44,7 @@ func main() {
 	admin.POST("/menu", menu.Create)
 	admin.PUT("/menu/:id", menu.Update)
 	admin.DELETE("/menu/:id", menu.Delete)
+	admin.PUT("/orders/:id/status", order.UpdateStatus)
 
 	// Orders (customer)
 	api.POST("/orders", order.Create)

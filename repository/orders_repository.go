@@ -111,3 +111,8 @@ func GetOrderOwner(db *sql.DB, orderID int) (userID int, err error) {
 	}
 	return
 }
+
+func UpdateOrderStatus(db *sql.DB, orderID int, status string) error {
+	_, err := db.Exec(`UPDATE orders SET status=$1 WHERE id=$2`, status, orderID)
+	return err
+}

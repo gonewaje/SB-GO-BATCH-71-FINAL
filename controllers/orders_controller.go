@@ -3,6 +3,7 @@ package controllers
 import (
 	"database/sql"
 	"net/http"
+	"strconv"
 
 	"gonewaje/final/repository"
 	"gonewaje/final/structs"
@@ -37,4 +38,20 @@ func (oc *OrdersController) MyOrders(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": orders})
+}
+
+func (oc *OrdersController) UpdateStatus(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	var req struct {
+		Status string `json:"status"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request"})
+		return
+	}
+	if err := repository.UpdateOrderStatus(oc.DB, id, req.Status); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "status updated", "status": req.Status})
 }
