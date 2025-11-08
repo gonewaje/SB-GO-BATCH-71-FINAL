@@ -1,0 +1,40 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ggwp
+      POSTGRES_DB: fooddb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  resto:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: resto
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: ggwp
+      DB_NAME: fooddb
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  postgres_data:
