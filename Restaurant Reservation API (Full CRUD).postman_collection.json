@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "7dd55be2-e9e9-4361-a981-d50c8daae10a",
+		"name": "Restaurant Reservation API (Full CRUD)",
+		"description": "Complete API collection for Restaurant Reservation System built with Go Gin framework.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29087513"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"final\",\n    \"email\": \"final@gmail.com\",\n    \"password\": \"secret123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login as Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set('ADMIN_TOKEN', jsonData.token);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@food.local\",\n    \"password\": \"admin123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login as User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.collectionVariables.set('USER_TOKEN', jsonData.token);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"cukurukuk@gmail.com\",\n    \"password\": \"secret123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Restaurants",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Restaurant Detail OK",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Restaurant Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Menu by Restaurant",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/restaurants/2/menu",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"restaurants",
+						"2",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Restaurant (Admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Resto Final\",\n    \"address\": \"Jalan apa saja 123\",\n    \"phone\": \"021-123456\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/restaurants",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"restaurants"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Restaurant (Admin)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Update resto final\",\n    \"address\": \"Jl. Merdeka No. 5\",\n    \"phone\": \"021-654321\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/restaurants/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"restaurants",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Orders Paid (Admin)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"paid\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/orders/3/status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"orders",
+						"3",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Orders Canceled (Admin)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"status\": \"canceled\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/orders/1/status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"orders",
+						"1",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Restaurant (Admin)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/admin/restaurants/4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"restaurants",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Menu (Admin)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 2,\n    \"name\": \"Bakso Final\",\n    \"price\": 10000,\n    \"available\": true\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/menu",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"menu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Menu (Admin)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 2,\n    \"name\": \"Update menu final 7\",\n    \"price\": 1000000,\n    \"available\": true\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/admin/menu/5",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"menu",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Menu (Admin)",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{ADMIN_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/admin/menu/7",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"admin",
+						"menu",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order (User)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{USER_TOKEN}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"restaurant_id\": 2,\n    \"items\": [\n        {\n            \"menu_item_id\": 5,\n            \"quantity\": 3\n        },\n        {\n            \"menu_item_id\": 6,\n            \"quantity\": 1\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/orders",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "My Orders (User)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{USER_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/orders/mine",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"mine"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "ADMIN_TOKEN",
+			"value": ""
+		},
+		{
+			"key": "USER_TOKEN",
+			"value": ""
+		}
+	]
+}
